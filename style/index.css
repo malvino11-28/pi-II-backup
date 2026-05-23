@@ -1,3 +1,11 @@
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+body{
+    background-color: #fdf6ec;
+}
 /* Banner Carousel */
 .carousel-item {
     height: 500px;
@@ -21,7 +29,7 @@
 .carousel-caption h3 {
     font-size: 36px;
     font-weight: bold;
-    color: white;
+    color: #fdf6ec;
     margin-bottom: 15px;
 }
 
@@ -70,18 +78,20 @@
 .benefit-title {
     font-size: 16px;
     font-weight: bold;
-    color: #f8f9fa;
+    color: #fdf6ec;
     margin-bottom: 5px;
 }
 
 .benefit-text {
     font-size: 13px;
-    color: #d2d3d3;
+    color: #fdf6ec;
 }
 
 /* Categories Section */
 .categories-section {
     padding: 50px 0;
+    background-color: #fdf6ec;
+    border-bottom: 3px solid rgb(238, 123, 48);
 }
 
 .section-title {
@@ -130,12 +140,12 @@
 .category-name {
     font-size: 24px;
     font-weight: bold;
-    color: white;
+    color: #fdf6ec;
     margin-bottom: 15px;
 }
 
 .category-btn {
-    background-color: white;
+    background-color: #fdf6ec;
     color: #440a0a;
     border: none;
     padding: 10px 30px;
@@ -147,17 +157,18 @@
 
 .category-btn:hover {
     background-color: #440a0a;
-    color: white;
+    color: #fdf6ec;
 }
 
 /* Products Section */
 .products-section {
     padding: 50px 0;
-    background-color: #f8f9fa;
+    background-color: #fdf6ec;
+    border-bottom: 3px solid rgb(238, 123, 48);
 }
 
 .product-card {
-    background-color: white;
+    background-color: #fdf6ec;
     border-radius: 10px;
     padding: 20px;
     text-align: center;
@@ -191,7 +202,7 @@
 
 .product-badge {
     background-color: rgb(238, 123, 48);
-    color: white;
+    color: #fdf6ec;
     padding: 5px 15px;
     border-radius: 20px;
     font-size: 12px;
@@ -223,7 +234,7 @@
 
 .product-btn {
     background-color: #440a0a;
-    color: white;
+    color: #fdf6ec;
     border: none;
     padding: 10px 30px;
     border-radius: 25px;
