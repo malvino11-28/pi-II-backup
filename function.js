@@ -124,6 +124,23 @@ function adicionarCliente() {
         return;
     }
 
+    // Verificar CPF duplicado
+    for (var i = 0; i < vetClientes.length; i++) {
+        var cpfClienteExistente = vetClientes[i].cpf.replace(/\D/g, '');
+        if (cpfClienteExistente == cpfLimpo) {
+            alert('Este CPF já está cadastrado!');
+            return;
+        }
+    }
+
+    // Verificar Email duplicado
+    for (var i = 0; i < vetClientes.length; i++) {
+        if (vetClientes[i].email.toLowerCase() == campoEmail.value.toLowerCase()) {
+            alert('Este e-mail já está cadastrado!');
+            return;
+        }
+    }
+
     // Criar cliente
     var novoCliente = {
         id: new Date().getTime(),
