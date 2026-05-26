@@ -8,10 +8,11 @@ function validarCPF(cpf) {
     if (cpf.length != 11) {
         return false;
     }
-    const regex = /^(\d)\1{10}$/; // regex verificando cpf igual (para facilitar)
+    cpf = cpf.replace(/\D/g, ""); // pegando apenas os numeros para validar
+    regex = /^(\d)\1{10}$/; // regex verificando cpf igual (para facilitar)
     // Impede CPFs iguais
     if (
-        cpf.test(regex)
+        regex.test(cpf);
     ) {
         return false;
     }
@@ -58,11 +59,15 @@ function validarCNPJ(cnpj) {
     i,
     d1,
     d2;
+
+  cnpj = cnpj.replace(/\D/g, ""); // pegando apenas os numeros
+
   regex = /^(\d)\1{13}$/;
   if (cnpj.length !== 14 || !!cnpj.match(regex)) return false;
 
   let pesosPri = [5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2]; // pesos oficiais para o primeiro digito
-  for (i = 1; i < 12; i++) sum += parseInt(cnpj.charAt(i)) * pesosPri[i];
+
+  for (i = 0; i < 12; i++) sum += parseInt(cnpj.charAt(i)) * pesosPri[i];
   rest = sum % 11;
   if (rest < 2) d1 = 0;
   else d1 = 11 - rest;
@@ -80,13 +85,13 @@ function validarCNPJ(cnpj) {
 }
 
 async function validarCEP(cep) {
-  let cepl = cep.replace(/\D/g, "");
+  cep = cep.replace(/\D/g, ""); // pegando apenas os numeros
   regex = /^[0-9]{8}$/;
 
-  if (!regex.test(cepl)) return false;
+  if (!regex.test(cep)) return false;
 
   try {
-    const res = await fetch(`https://viacep.com.br/ws/${cepl}/json/`); // chamada assincrona para api
+    const res = await fetch(`https://viacep.com.br/ws/${cep}/json/`); // chamada assincrona para api
     const dados = await res.json(); // transforma em json
 
     if (!res.ok) return false; // verifica se a req falhou
@@ -105,7 +110,6 @@ async function validarCEP(cep) {
     console.log(error);
     return false;
   }
-  return cep.test(regex);
 }
 
 function validarData(data) {
@@ -127,32 +131,66 @@ function validarData(data) {
   else return true;
 }
 
-// // // // // // // // // // // // // // // // // // //
+// integrando ao html
 const formCadastro = document.getElementById("formCad");
-// const formCarrinho = document.getElementById("formCar");
 
  if (formCadastro) {
-   const diaInput = document.getElementById("dia_nasc");
-   const mesInput = document.getElementById("mes_nasc");
-   const anoInput = document.getElementById("ano_nasc");
+  const cpfInput = document.getElementById("cpf");
+  const cnpjInput = document.getElementById("cnpj"); // Lembre-se de mudar o ID no HTML do CNPJ para "cnpj"
+  const cepInput = document.getElementById("cep");
+    
+  // campos que serão preenchidos automaticamente
+  const enderecoInput = document.getElementById("endereco");
+  const bairroInput = document.getElementById("bairro");
+  const cidadeInput = document.getElementById("cidade");
+  const ufInput = document.getElementById("uf");
+
+  const diaInput = document.getElementById("dia_nasc");
+  const mesInput = document.getElementById("mes_nasc");
+  const anoInput = document.getElementById("ano_nasc");
+
+  cepInput.addEventListener("blur", async () => {
+    const info = await validarCEP(cepInput.value);
+
+    if (info) {
+      enderecoInput.value = info.logradouro;
+      bairroInput.value = infoCep.bairro;
+      cidadeInput.value = infoCep.cidade;
+      ufInput.value = infoCep.estado;
+      cepInput.style.borderColor = ""; // rever
+    } else {
+      cepInput.style.borderColor = "";
+    }
+  });
 
    formCadastro.addEventListener("submit", (e) => {
      e.preventDefault();
 
-     if (validarFormulario()) console.log("data certa");
-     else console.log("data errada");
-   });
 
-   function validarFormulario() {
-     const dia = diaInput.value;
+     cpfValido = validarCPF(cpfInput.value);
+     if (cpfValido !== "") {
+            if (!cpfValido) 
+                console.log("CPF Inválido!");
+      }
+
+      cnpjValido = validarCNPJ(cnpjInput.value);
+      if (cnpjValido !== "") {
+            if (!cnpjValido) 
+                console.log("CNPJ Inválido!");
+      }
+
+      const dia = diaInput.value;
      const mes = mesInput.value;
      const ano = anoInput.value.trim();
 
      if (ano === "") return false;
 
      const dataString = `${dia}/${mes}/${ano}`;
-     const dataValida = validarData(dataString);
-
-     return dataValida;
-   }
+     const dataValida = validarData(datastring);
+     if(dataValida)
+      console.log("invalido");
+    
+     if(dataValida&&cnpjValido&&cpfValido)
+        formCad.submit();
+   });
  }
