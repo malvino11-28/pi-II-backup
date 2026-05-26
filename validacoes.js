@@ -3,179 +3,317 @@ let regex;
 // CPF, CNPJ
 // data futur/passada
 // CEP (API)
+
 function validarCPF(cpf) {
+  cpf = cpf.replace(/\D/g, ""); // pegando apenas os numeros para validar
 
-    if (cpf.length != 11) {
-        return false;
-    }
-    const regex = /^(\d)\1{10}$/; // regex verificando cpf igual (para facilitar)
-    // Impede CPFs iguais
-    if (
-        cpf.test(regex)
-    ) {
-        return false;
-    }
+  if (cpf.length !== 11) {
+    return false;
+  }
 
-    var soma = 0;
-    var resto;
+  regex = /^(\d)\1{10}$/; // regex verificando cpf igual (para facilitar)
 
-    for (var i = 1; i <= 9; i++) {
-        soma = soma + parseInt(cpf.substring(i - 1, i)) * (11 - i);
-    }
+  // Impede CPFs iguais
+  if (regex.test(cpf)) {
+    return false;
+  }
 
-    resto = (soma * 10) % 11;
+  let soma = 0;
+  let resto;
 
-    if (resto == 10 || resto == 11) {
-        resto = 0;
-    }
+  for (let i = 1; i <= 9; i++) {
+    soma = soma + parseInt(cpf.substring(i - 1, i)) * (11 - i);
+  }
 
-    if (resto != parseInt(cpf.substring(9, 10))) {
-        return false;
-    }
+  resto = (soma * 10) % 11;
 
-    soma = 0;
+  if (resto === 10 || resto === 11) {
+    resto = 0;
+  }
 
-    for (var i = 1; i <= 10; i++) {
-        soma = soma + parseInt(cpf.substring(i - 1, i)) * (12 - i);
-    }
+  if (resto !== parseInt(cpf.substring(9, 10))) {
+    return false;
+  }
 
-    resto = (soma * 10) % 11;
+  soma = 0;
 
-    if (resto == 10 || resto == 11) {
-        resto = 0;
-    }
+  for (let i = 1; i <= 10; i++) {
+    soma = soma + parseInt(cpf.substring(i - 1, i)) * (12 - i);
+  }
 
-    if (resto != parseInt(cpf.substring(10, 11))) {
-        return false;
-    }
+  resto = (soma * 10) % 11;
 
-    return true;
+  if (resto === 10 || resto === 11) {
+    resto = 0;
+  }
+
+  if (resto !== parseInt(cpf.substring(10, 11))) {
+    return false;
+  }
+
+  return true;
 }
 
 function validarCNPJ(cnpj) {
-  let sum = 0,
-    rest,
-    i,
-    d1,
-    d2;
+  let sum = 0;
+  let rest;
+  let i;
+  let d1;
+  let d2;
+
+  cnpj = cnpj.replace(/\D/g, ""); // pegando apenas os numeros
+
   regex = /^(\d)\1{13}$/;
-  if (cnpj.length !== 14 || !!cnpj.match(regex)) return false;
+
+  if (cnpj.length !== 14 || regex.test(cnpj)) {
+    return false;
+  }
 
   let pesosPri = [5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2]; // pesos oficiais para o primeiro digito
-  for (i = 1; i < 12; i++) sum += parseInt(cnpj.charAt(i)) * pesosPri[i];
+
+  for (i = 0; i < 12; i++) {
+    sum += parseInt(cnpj.charAt(i)) * pesosPri[i];
+  }
+
   rest = sum % 11;
-  if (rest < 2) d1 = 0;
-  else d1 = 11 - rest;
-  if (d1 !== parseInt(cnpj.charAt(12))) return false;
+
+  if (rest < 2) {
+    d1 = 0;
+  } else {
+    d1 = 11 - rest;
+  }
+
+  if (d1 !== parseInt(cnpj.charAt(12))) {
+    return false;
+  }
 
   sum = 0;
+
   let pesosSeg = [6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2];
-  for (i = 0; i < 13; i++) sum += parseInt(cnpj.charAt(i)) * pesosSeg[i];
+
+  for (i = 0; i < 13; i++) {
+    sum += parseInt(cnpj.charAt(i)) * pesosSeg[i];
+  }
+
   rest = sum % 11;
-  if (rest < 2) d2 = 0;
-  else d2 = 11 - rest;
-  if (d2 !== parseInt(cnpj.charAt(13))) return false;
+
+  if (rest < 2) {
+    d2 = 0;
+  } else {
+    d2 = 11 - rest;
+  }
+
+  if (d2 !== parseInt(cnpj.charAt(13))) {
+    return false;
+  }
 
   return true; // cnpj matematicamente validado
 }
 
 async function validarCEP(cep) {
-  let cepl = cep.replace(/\D/g, "");
+  cep = cep.replace(/\D/g, ""); // pegando apenas os numeros
+
   regex = /^[0-9]{8}$/;
 
-  if (!regex.test(cepl)) return false;
+  if (!regex.test(cep)) {
+    return false;
+  }
 
   try {
-    const res = await fetch(`https://viacep.com.br/ws/${cepl}/json/`); // chamada assincrona para api
+    const res = await fetch(`https://viacep.com.br/ws/${cep}/json/`); // chamada assincrona para api
     const dados = await res.json(); // transforma em json
 
-    if (!res.ok) return false; // verifica se a req falhou
-    if (dados.erro === true)
-      // retorna erro true se não existir
-      return false;
+    if (!res.ok) {
+      return false; // verifica se a req falhou
+    }
+
+    if (dados.erro === true) {
+      return false; // retorna erro true se não existir
+    }
 
     return {
       // se o cep for real,
-      logradouro: dados.logradouro,
-      cidade: dados.localidade,
-      bairro: dados.bairro,
-      estado: dados.uf,
+      logradouro: dados.logradouro || "",
+      cidade: dados.localidade || "",
+      bairro: dados.bairro || "",
+      estado: dados.uf || "",
     };
   } catch (error) {
     console.log(error);
     return false;
   }
-  return cep.test(regex);
 }
 
 function validarData(data) {
   regex = /^(\d{2})\/(\d{2})\/(\d{4})$/;
 
   const format = data.match(regex);
-  if (!format) return false;
+
+  if (!format) {
+    return false;
+  }
 
   const dia = parseInt(format[1], 10); // os parenteses do regex guardam os dados em array, posicao 0 é o texto inteiro
   const mes = parseInt(format[2], 10) - 1; // o 10 e garantia que a data n vai ser lida como octal
   const ano = parseInt(format[3], 10);
 
-  const dataForm = new Date(dia, mes, ano); // pegando data do form
+  const dataForm = new Date(ano, mes, dia); // pegando data do form
   const dataAtual = new Date();
 
   dataAtual.setHours(0, 0, 0, 0);
+  dataForm.setHours(0, 0, 0, 0);
 
-  if (dataForm > dataAtual) return false; // verificando data futura
-  else return true;
+  // verifica se a data realmente existe
+  // exemplo: 31/02/2000 não pode ser aceito
+  if (
+    dataForm.getDate() !== dia ||
+    dataForm.getMonth() !== mes ||
+    dataForm.getFullYear() !== ano
+  ) {
+    return false;
+  }
+
+  if (dataForm > dataAtual) {
+    return false; // verificando data futura
+  }
+
+  return true;
 }
 
-// // // // // // // // // // // // // // // // // // //
-// const formCadastro = document.getElementById("formCad");
-// const formCarrinho = document.getElementById("formCar");
+// integrando ao html
+const formCadastro = document.getElementById("formCad");
 
-// if (formCadastro) {
-//   const diaInput = document.getElementById("dia_nasc");
-//   const mesInput = document.getElementById("mes_nasc");
-//   const anoInput = document.getElementById("ano_nasc");
+if (formCadastro) {
+  const cpfInput = document.getElementById("cpf");
+  const cnpjInput = document.getElementById("cnpj");
+  const cepInput = document.getElementById("cep");
 
-//   formCadastro.addEventListener("submit", (e) => {
-//     e.preventDefault();
+  // campos que serão preenchidos automaticamente
+  const enderecoInput = document.getElementById("endereco");
+  const bairroInput = document.getElementById("bairro");
+  const cidadeInput = document.getElementById("cidade");
+  const ufInput = document.getElementById("uf");
 
-//     if (validarFormulario()) console.log("data certa");
-//     else console.log("data errada");
-//   });
+  const diaInput = document.getElementById("dia_nasc");
+  const mesInput = document.getElementById("mes_nasc");
+  const anoInput = document.getElementById("ano_nasc");
 
-//   function validarFormulario() {
-//     const dia = diaInput.value;
-//     const mes = mesInput.value;
-//     const ano = anoInput.value.trim();
+  function mensagemErro(input) {
+    input.classList.remove("is-valid");
+    input.classList.add("is-invalid");
+  }
 
-//     if (ano === "") return false;
+  function mensagemValida(input) {
+    input.classList.remove("is-invalid");
+    input.classList.add("is-valid");
+  }
 
-//     const dataString = `${dia}/${mes}/${ano}`;
-//     const dataValida = validadores.validarData(dataString);
+  cepInput.addEventListener("blur", async () => {
+    const info = await validarCEP(cepInput.value);
 
-//     return dataValida;
-//   }
-// }
+    if (info) {
+      enderecoInput.value = info.logradouro;
+      bairroInput.value = info.bairro;
+      cidadeInput.value = info.cidade;
+      ufInput.value = info.estado;
 
-// if (formCarrinho) {
-//   const cepInput = document.getElementById("cep");
+      mensagemValida(cepInput);
 
-//   formCarrinho.addEventListener("submit", async (e) => {
-//     e.preventDefault(); // trava para ler antes de mudar de pagina
+      // como a API preencheu esses campos, ja marca como validos tambem
+      mensagemValida(enderecoInput);
+      mensagemValida(bairroInput);
+      mensagemValida(cidadeInput);
+      mensagemValida(ufInput);
+    } else {
+      mensagemErro(cepInput);
 
-//     const resultado = await validarFormulario(); // espera resposta da API
-//     if (resultado) {
-//       console.log("cep correto, dados: ", resultado);
-//       //    formCarrinho.submit(); // libera pagina (comentado para verificar o resultado do console.log)
-//     } else console.log("cep invalido");
-//   });
+      enderecoInput.value = "";
+      bairroInput.value = "";
+      cidadeInput.value = "";
+      ufInput.value = "";
+    }
+  });
 
-//   function validarFormulario() {
-//     const cep = cepInput.value.trim();
-//     if (cep === "") return false;
+  formCadastro.addEventListener("submit", (e) => {
+    e.preventDefault();
 
-//     const cepValido = validadores.validarCEP(cep);
+    let cpfValido = false;
+    let cnpjValido = false;
+    let cepValido = false;
+    let dataNascimentoValida = false;
 
-//     return cepValido;
-//   }
-// }
+    // validação do CPF
+    if (cpfInput.value.trim() !== "") {
+      cpfValido = validarCPF(cpfInput.value);
+
+      if (!cpfValido) {
+        mensagemErro(cpfInput);
+      } else {
+        mensagemValida(cpfInput);
+      }
+    } else {
+      mensagemErro(cpfInput);
+    }
+
+    // validação do CNPJ
+    // CNPJ não é obrigatório, então só valida se o usuário preencher
+    if (cnpjInput.value.trim() !== "") {
+      cnpjValido = validarCNPJ(cnpjInput.value);
+
+      if (!cnpjValido) {
+        mensagemErro(cnpjInput);
+      } else {
+        mensagemValida(cnpjInput);
+      }
+    } else {
+      cnpjValido = true;
+      // remove qualquer marcação visual se o campo estiver vazio
+      cnpjInput.classList.remove("is-invalid");
+      cnpjInput.classList.remove("is-valid");
+    }
+
+    // validação do CEP
+    if (cepInput.value.trim() !== "") {
+      const cepLimpo = cepInput.value.replace(/\D/g, "");
+
+      if (cepLimpo.length === 8 && cepInput.classList.contains("is-valid")) {
+        cepValido = true;
+        mensagemValida(cepInput);
+      } else {
+        mensagemErro(cepInput);
+      }
+    } else {
+      mensagemErro(cepInput);
+    }
+
+    // validação da data de nascimento
+    const dia = diaInput.value;
+    const mes = mesInput.value;
+    const ano = anoInput.value.trim();
+
+    if (dia !== "" && mes !== "" && ano !== "") {
+      const dataString = `${dia}/${mes}/${ano}`;
+
+      dataNascimentoValida = validarData(dataString);
+
+      if (dataNascimentoValida) {
+        mensagemValida(diaInput);
+        mensagemValida(mesInput);
+        mensagemValida(anoInput);
+      } else {
+        mensagemErro(diaInput);
+        mensagemErro(mesInput);
+        mensagemErro(anoInput);
+      }
+    } else {
+      mensagemErro(diaInput);
+      mensagemErro(mesInput);
+      mensagemErro(anoInput);
+    }
+
+    // se tudo estiver certo, envia o formulário
+    if (dataNascimentoValida && cepValido && cnpjValido && cpfValido) {
+      formCadastro.submit();
+    }
+  });
+}
