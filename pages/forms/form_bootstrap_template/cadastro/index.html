@@ -51,23 +51,17 @@
 
           <div class="card-body">
             <form method="POST">
-              <div class="form-row m-b-55">
+              <div class="form-row">
                 <div class="name">Nome</div>
                 <div class="value">
-                  <div class="row row-space">
-                    <div class="col-2">
-                      <div class="input-group">
-                        <input
-                          class="input--style-5"
-                          type="text"
-                          id="responsavel-nome"
-                          name="responsavel_nome"
-                        />
-                        <label class="label--desc" for="responsavel-nome"
-                          >Nome Completo</label
-                        >
-                      </div>
-                    </div>
+                  <div class="input-group-desc">
+                    <input
+                      class="input--style-5"
+                      type="text"
+                      id="nome"
+                      name="nome"
+                      placeholder="Nome completo"
+                    />
                   </div>
                 </div>
               </div>
@@ -243,11 +237,11 @@
                 </div>
               </div>
 
-              <div class="form-row m-b-55">
+              <div class="form-row">
                 <div class="name">Nascimento</div>
                 <div class="value">
-                  <div class="row row-space">
-                    <div class="col-3">
+                  <div class="row row-space nascimento-row">
+                    <div class="col-nascimento">
                       <div class="input-group-desc">
                         <select
                           class="input--style-5"
@@ -290,7 +284,8 @@
                         <label class="label--desc" for="dia_nasc">Dia</label>
                       </div>
                     </div>
-                    <div class="col-6">
+
+                    <div class="col-nascimento">
                       <div class="input-group-desc">
                         <select
                           class="input--style-5"
@@ -314,7 +309,8 @@
                         <label class="label--desc" for="mes_nasc">Mês</label>
                       </div>
                     </div>
-                    <div class="col-3">
+
+                    <div class="col-nascimento">
                       <div class="input-group-desc">
                         <input
                           class="input--style-5"
@@ -387,38 +383,23 @@
                 </div>
               </div>
 
-              <p class="mb-3 fs-7 text-white">
+              <p class="texto-termos">
                 As pessoas que usam nosso serviço podem ter carregado suas
                 informações de contato no Medium.
-                <a href="#" class="text-white">Saiba mais</a>.
-              </p>
-              <p class="mb-5 fs-7 text-white">
-                Ao clicar em Cadastre-se, você concorda com nossos
-                <a href="#" class="text-white">Termos</a>,
-                <a href="#" class="text-white">Política de Privacidade</a> e
-                <a href="#" class="text-white">Política de Cookies</a>. Você
-                poderá receber notificações por SMS e cancelar isso quando
-                quiser.
+                <a href="#">Saiba mais</a>.
               </p>
 
-              <div class="form-row p-t-20">
-                <label class="label label--block">
-                  <label class="checkbox-container m-r-55">
-                    <input
-                      type="checkbox"
-                      name="consentimento"
-                      value="sim"
-                      checked
-                    />
-                    <span class="checkmark"></span>
-                  </label>
-                  Concordo com os termos de cadastro e política de privacidade.
-                </label>
-              </div>
+              <p class="texto-termos texto-termos-espaco mt-5">
+                Ao clicar em Cadastre-se, você concorda com nossos
+                <a href="#">Termos</a>,
+                <a href="#">Política de Privacidade</a> e
+                <a href="#">Política de Cookies</a>. Você poderá receber
+                notificações por SMS e cancelar isso quando quiser.
+              </p>
 
               <div>
                 <button class="btn btn--radius-2 btn--red" type="submit">
-                  Cadastrar
+                  Cadastrar-se
                 </button>
               </div>
             </form>
