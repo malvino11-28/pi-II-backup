@@ -334,6 +334,11 @@
                           <option value="30">30</option>
                           <option value="31">31</option>
                         </select>
+
+                        <div class="invalid-feedback">
+                          Informe um dia válido.
+                        </div>
+
                         <label class="label--desc" for="dia_nasc">Dia</label>
                       </div>
                     </div>
@@ -359,6 +364,11 @@
                           <option value="11">Novembro</option>
                           <option value="12">Dezembro</option>
                         </select>
+
+                        <div class="invalid-feedback">
+                          Informe um mês válido.
+                        </div>
+
                         <label class="label--desc" for="mes_nasc">Mês</label>
                       </div>
                     </div>
@@ -373,6 +383,11 @@
                           maxlength="4"
                           placeholder="Ano"
                         />
+
+                        <div class="invalid-feedback">
+                          Data de nascimento inválida.
+                        </div>
+
                         <label class="label--desc" for="ano_nasc">Ano</label>
                       </div>
                     </div>
@@ -574,11 +589,7 @@
       </div>
     </footer>
     <!-- Scripts -->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/select2/select2.min.js"></script>
-    <script src="vendor/datepicker/moment.min.js"></script>
-    <script src="vendor/datepicker/daterangepicker.js"></script>
-    <script src="js/global.js"></script>
+    <script src="/validacoes.js"></script>
   </body>
 </html>
 
