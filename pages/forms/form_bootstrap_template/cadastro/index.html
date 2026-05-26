@@ -1,0 +1,439 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="description" content="Colorlib Templates" />
+    <meta name="author" content="Colorlib" />
+    <meta name="keywords" content="Colorlib Templates" />
+    <title>Cadastro</title>
+
+    <!-- Icons font CSS -->
+    <link
+      href="vendor/mdi-font/css/material-design-iconic-font.min.css"
+      rel="stylesheet"
+      media="all"
+    />
+    <link
+      href="vendor/font-awesome-4.7/css/font-awesome.min.css"
+      rel="stylesheet"
+      media="all"
+    />
+
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700"
+      rel="stylesheet"
+    />
+
+    <!-- Vendor CSS -->
+    <link href="vendor/select2/select2.min.css" rel="stylesheet" media="all" />
+    <link
+      href="vendor/datepicker/daterangepicker.css"
+      rel="stylesheet"
+      media="all"
+    />
+
+    <!-- Main CSS -->
+    <link href="css/main.css" rel="stylesheet" media="all" />
+  </head>
+
+  <body>
+    <div class="page-wrapper bg-gra-03 p-t-45 p-b-50">
+      <div class="wrapper wrapper--w790">
+        <div class="card card-5">
+          <div class="card-heading">
+            <h2 class="title">CADASTRE-SE AQUI</h2>
+          </div>
+
+          <div class="card-body">
+            <form method="POST">
+              <div class="form-row m-b-55">
+                <div class="name">Nome</div>
+                <div class="value">
+                  <div class="row row-space">
+                    <div class="col-2">
+                      <div class="input-group-desc">
+                        <input
+                          class="input--style-5"
+                          type="text"
+                          id="responsavel-nome"
+                          name="responsavel_nome"
+                        />
+                        <label class="label--desc" for="responsavel-nome"
+                          >Nome Completo</label
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="name">Email</div>
+                <div class="value">
+                  <div class="input-group">
+                    <input
+                      class="input--style-5"
+                      type="email"
+                      id="email"
+                      name="email"
+                      placeholder="exemplo@email.com"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="name">CPF</div>
+                <div class="value">
+                  <div class="input-group">
+                    <input
+                      class="input--style-5"
+                      type="text"
+                      id="cpf-cnpj"
+                      name="cpf_cnpj"
+                      placeholder="000.000.000-00"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="name">CNPJ</div>
+                <div class="value">
+                  <div class="input-group">
+                    <input
+                      class="input--style-5"
+                      type="text"
+                      id="cpf-cnpj"
+                      name="cpf_cnpj"
+                      placeholder="00.000.000/0000-00"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-row m-b-55">
+                <div class="name">Telefone</div>
+                <div class="value">
+                  <div class="row row-refine">
+                    <div class="col-3">
+                      <div class="input-group-desc">
+                        <input
+                          class="input--style-5"
+                          type="text"
+                          id="telefone-ddd"
+                          name="telefone_ddd"
+                        />
+                        <label class="label--desc" for="telefone-ddd"
+                          >DDD</label
+                        >
+                      </div>
+                    </div>
+                    <div class="col-9">
+                      <div class="input-group-desc">
+                        <input
+                          class="input--style-5"
+                          type="text"
+                          id="telefone-numero"
+                          name="telefone_numero"
+                          placeholder="00000-0000"
+                        />
+                        <label class="label--desc" for="telefone-numero"
+                          >Número</label
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-row m-b-55">
+                <div class="name">Endereço</div>
+                <div class="value">
+                  <div class="row row-space">
+                    <div class="col-3">
+                      <div class="input-group-desc">
+                        <input
+                          class="input--style-5"
+                          type="text"
+                          id="cep"
+                          name="cep"
+                          maxlength="9"
+                          placeholder="00000-000"
+                        />
+                        <label class="label--desc" for="cep">CEP</label>
+                      </div>
+                    </div>
+                    <div class="col-9">
+                      <div class="input-group-desc">
+                        <input
+                          class="input--style-5"
+                          type="text"
+                          id="endereco"
+                          name="endereco"
+                          placeholder="Rua, avenida ou travessa"
+                        />
+                        <label class="label--desc" for="endereco"
+                          >Endereço</label
+                        >
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row row-space" style="margin-top: 30px">
+                    <div class="col-3">
+                      <div class="input-group-desc">
+                        <input
+                          class="input--style-5"
+                          type="number"
+                          id="numero"
+                          name="numero"
+                          min="1"
+                          placeholder="123"
+                        />
+                        <label class="label--desc" for="numero">Número</label>
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="input-group-desc">
+                        <input
+                          class="input--style-5"
+                          type="text"
+                          id="bairro"
+                          name="bairro"
+                          placeholder="Centro"
+                        />
+                        <label class="label--desc" for="bairro">Bairro</label>
+                      </div>
+                    </div>
+                    <div class="col-3">
+                      <div class="input-group-desc">
+                        <input
+                          class="input--style-5"
+                          type="text"
+                          id="cidade"
+                          name="cidade"
+                          placeholder="Cidade"
+                        />
+                        <label class="label--desc" for="cidade">Cidade</label>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row row-space" style="margin-top: 30px">
+                    <div class="col-3">
+                      <div class="input-group-desc">
+                        <input
+                          class="input--style-5"
+                          type="text"
+                          id="uf"
+                          name="uf"
+                          maxlength="2"
+                          placeholder="SP"
+                        />
+                        <label class="label--desc" for="uf">UF</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-row m-b-55">
+                <div class="name">Nascimento</div>
+                <div class="value">
+                  <div class="row row-space">
+                    <div class="col-3">
+                      <div class="input-group-desc">
+                        <select
+                          class="input--style-5"
+                          id="dia_nasc"
+                          name="dia_nasc"
+                        >
+                          <option value="">Dia</option>
+                          <option value="01">1</option>
+                          <option value="02">2</option>
+                          <option value="03">3</option>
+                          <option value="04">4</option>
+                          <option value="05">5</option>
+                          <option value="06">6</option>
+                          <option value="07">7</option>
+                          <option value="08">8</option>
+                          <option value="09">9</option>
+                          <option value="10">10</option>
+                          <option value="11">11</option>
+                          <option value="12">12</option>
+                          <option value="13">13</option>
+                          <option value="14">14</option>
+                          <option value="15">15</option>
+                          <option value="16">16</option>
+                          <option value="17">17</option>
+                          <option value="18">18</option>
+                          <option value="19">19</option>
+                          <option value="20">20</option>
+                          <option value="21">21</option>
+                          <option value="22">22</option>
+                          <option value="23">23</option>
+                          <option value="24">24</option>
+                          <option value="25">25</option>
+                          <option value="26">26</option>
+                          <option value="27">27</option>
+                          <option value="28">28</option>
+                          <option value="29">29</option>
+                          <option value="30">30</option>
+                          <option value="31">31</option>
+                        </select>
+                        <label class="label--desc" for="dia_nasc">Dia</label>
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="input-group-desc">
+                        <select
+                          class="input--style-5"
+                          id="mes_nasc"
+                          name="mes_nasc"
+                        >
+                          <option value="">Mês</option>
+                          <option value="01">Janeiro</option>
+                          <option value="02">Fevereiro</option>
+                          <option value="03">Março</option>
+                          <option value="04">Abril</option>
+                          <option value="05">Maio</option>
+                          <option value="06">Junho</option>
+                          <option value="07">Julho</option>
+                          <option value="08">Agosto</option>
+                          <option value="09">Setembro</option>
+                          <option value="10">Outubro</option>
+                          <option value="11">Novembro</option>
+                          <option value="12">Dezembro</option>
+                        </select>
+                        <label class="label--desc" for="mes_nasc">Mês</label>
+                      </div>
+                    </div>
+                    <div class="col-3">
+                      <div class="input-group-desc">
+                        <input
+                          class="input--style-5"
+                          type="text"
+                          id="ano_nasc"
+                          name="ano_nasc"
+                          maxlength="4"
+                          placeholder="Ano"
+                        />
+                        <label class="label--desc" for="ano_nasc">Ano</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-row p-t-20">
+                <label class="label label--block name">Gênero</label>
+                <div class="p-t-15">
+                  <!--preciso adicionar espaço na esquerda-->
+                  <label class="radio-container m-r-55">
+                    Feminino
+                    <input type="radio" name="genero" value="F" />
+                    <span class="checkmark"></span>
+                  </label>
+                  <label class="radio-container m-r-55">
+                    Masculino
+                    <input type="radio" name="genero" value="M" />
+                    <span class="checkmark"></span>
+                  </label>
+                  <label class="radio-container">
+                    Outro
+                    <input type="radio" name="genero" value="Outro" />
+                    <span class="checkmark"></span>
+                  </label>
+                </div>
+              </div>
+
+              <div class="form-row m-b-55">
+                <div class="name">Acesso</div>
+                <div class="value">
+                  <div class="row row-space">
+                    <div class="col-2">
+                      <div class="input-group-desc">
+                        <input
+                          class="input--style-5"
+                          type="password"
+                          id="senha"
+                          name="senha"
+                          placeholder="Mínimo 8 caracteres"
+                        />
+                        <label class="label--desc" for="senha">Senha</label>
+                      </div>
+                    </div>
+                    <div class="col-2">
+                      <div class="input-group-desc">
+                        <input
+                          class="input--style-5"
+                          type="password"
+                          id="confirmarSenha"
+                          name="confirmarSenha"
+                          placeholder="Repita sua senha"
+                        />
+                        <label class="label--desc" for="confirmarSenha"
+                          >Confirmar senha</label
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <p class="mb-3 fs-7 text-white">
+                As pessoas que usam nosso serviço podem ter carregado suas
+                informações de contato no Medium.
+                <a href="#" class="text-white">Saiba mais</a>.
+              </p>
+              <p class="mb-5 fs-7 text-white">
+                Ao clicar em Cadastre-se, você concorda com nossos
+                <a href="#" class="text-white">Termos</a>,
+                <a href="#" class="text-white">Política de Privacidade</a> e
+                <a href="#" class="text-white">Política de Cookies</a>. Você
+                poderá receber notificações por SMS e cancelar isso quando
+                quiser.
+              </p>
+
+              <div class="form-row p-t-20">
+                <label class="label label--block">
+                  <label class="checkbox-container m-r-55">
+                    <input
+                      type="checkbox"
+                      name="consentimento"
+                      value="sim"
+                      checked
+                    />
+                    <span class="checkmark"></span>
+                  </label>
+                  Concordo com os termos de cadastro e política de privacidade.
+                </label>
+              </div>
+
+              <div>
+                <button class="btn btn--radius-2 btn--red" type="submit">
+                  Cadastrar
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/select2/select2.min.js"></script>
+    <script src="vendor/datepicker/moment.min.js"></script>
+    <script src="vendor/datepicker/daterangepicker.js"></script>
+    <script src="js/global.js"></script>
+  </body>
+</html>
+
+<!--https://colorlib.com/wp/template/colorlib-regform-5/-->
