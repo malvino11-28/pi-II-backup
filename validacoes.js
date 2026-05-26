@@ -149,6 +149,16 @@ const formCadastro = document.getElementById("formCad");
   const mesInput = document.getElementById("mes_nasc");
   const anoInput = document.getElementById("ano_nasc");
 
+  function mensagemErro(input, mensagem) {
+    input.classList.remove("is-valid");
+    input.classList.add("is-invalid");
+  }
+
+  function mensagemValida(input) {
+    input.classList.remove("is-valid");
+    input.classList.add("is-invalid");
+  }
+
   cepInput.addEventListener("blur", async () => {
     const info = await validarCEP(cepInput.value);
 
@@ -157,11 +167,13 @@ const formCadastro = document.getElementById("formCad");
       bairroInput.value = infoCep.bairro;
       cidadeInput.value = infoCep.cidade;
       ufInput.value = infoCep.estado;
-      cepInput.style.borderColor = ""; // rever
+      mensagemValida(cepInput);
     } else {
-      cepInput.style.borderColor = "";
+      mensagemErro(cepInput, "CEP inválido");
     }
   });
+
+  // // // //
 
    formCadastro.addEventListener("submit", (e) => {
      e.preventDefault();
@@ -176,20 +188,48 @@ const formCadastro = document.getElementById("formCad");
       cnpjValido = validarCNPJ(cnpjInput.value);
       if (cnpjValido !== "") {
             if (!cnpjValido) 
+                mensagemErro(cnpjInput, "CPF inválido");
+            else
+                mensagemValida(cnpjInput);
+      }
+      else 
+        mensagemErro(cnpjInput, "O CPF é obigatório");
+
+      // // // //
+
+       cnpjValido = validarcnpj(cnpjInput.value);
+     if (cnpjValido !== "") {
+            if (!cnpjValido) 
                 console.log("CNPJ Inválido!");
       }
 
-      const dia = diaInput.value;
+      cnpjValido = validarCNPJ(cnpjInput.value);
+      if (cnpjValido !== "") {
+            if (!cnpjValido) 
+                mensagemErro(cnpjInput, "CNPJ inválido");
+            else
+                mensagemValida(cnpjInput);
+      }
+      else 
+        mensagemErro(cnpjInput, "O CNPJ é obigatório");
+
+      // // // //
+
+     const dia = diaInput.value;
      const mes = mesInput.value;
      const ano = anoInput.value.trim();
 
-     if (ano === "") return false;
+     if (ano === "")  
+      mensagemErro(anoInput, "Preencha a data");
 
      const dataString = `${dia}/${mes}/${ano}`;
      const dataValida = validarData(datastring);
      if(dataValida)
-      console.log("invalido");
-    
+      mensagemValida(anoInput, "Data de nascimento inválida");
+    else 
+      mensagemErro(anoInput, "Data inválida");
+      // // // //
+
      if(dataValida&&cnpjValido&&cpfValido)
         formCad.submit();
    });
