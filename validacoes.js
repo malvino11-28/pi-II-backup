@@ -12,7 +12,7 @@ function validarCPF(cpf) {
     regex = /^(\d)\1{10}$/; // regex verificando cpf igual (para facilitar)
     // Impede CPFs iguais
     if (
-        regex.test(cpf);
+        regex.test(cpf)
     ) {
         return false;
     }
@@ -155,8 +155,8 @@ const formCadastro = document.getElementById("formCad");
   }
 
   function mensagemValida(input) {
-    input.classList.remove("is-valid");
-    input.classList.add("is-invalid");
+    input.classList.remove("is-invalid");
+    input.classList.add("is-valid");
   }
 
   cepInput.addEventListener("blur", async () => {
@@ -164,9 +164,9 @@ const formCadastro = document.getElementById("formCad");
 
     if (info) {
       enderecoInput.value = info.logradouro;
-      bairroInput.value = infoCep.bairro;
-      cidadeInput.value = infoCep.cidade;
-      ufInput.value = infoCep.estado;
+      bairroInput.value = info.bairro;
+      cidadeInput.value = info.cidade;
+      ufInput.value = info.estado;
       mensagemValida(cepInput);
     } else {
       mensagemErro(cepInput, "CEP inválido");
@@ -178,40 +178,35 @@ const formCadastro = document.getElementById("formCad");
    formCadastro.addEventListener("submit", (e) => {
      e.preventDefault();
 
+     let cpfValido = false;
+    let cnpjValido = false;
+    let dataValida = false;
 
-     cpfValido = validarCPF(cpfInput.value);
-     if (cpfValido !== "") {
-            if (!cpfValido) 
-                console.log("CPF Inválido!");
-      }
+     if (cpfInput.value.trim() !== "") {
+            cpfValido = validarCPF(cpfInput.value);
+            if (!cpfValido) {
+                mensagemErro(cpfInput, "CPF inválido");
+            } else {
+                mensagemValida(cpfInput);
+            }
+        } else {
+            mensagemErro(cpfInput, "O CPF é obrigatório");
+        }
 
-      cnpjValido = validarCNPJ(cnpjInput.value);
-      if (cnpjValido !== "") {
-            if (!cnpjValido) 
-                mensagemErro(cnpjInput, "CPF inválido");
-            else
-                mensagemValida(cnpjInput);
-      }
-      else 
-        mensagemErro(cnpjInput, "O CPF é obigatório");
+        // // // // 
 
-      // // // //
-
-       cnpjValido = validarcnpj(cnpjInput.value);
-     if (cnpjValido !== "") {
-            if (!cnpjValido) 
-                console.log("CNPJ Inválido!");
-      }
-
-      cnpjValido = validarCNPJ(cnpjInput.value);
-      if (cnpjValido !== "") {
-            if (!cnpjValido) 
+      if (cnpjInput.value.trim() !== "") {
+            cnpjValido = validarCNPJ(cnpjInput.value);
+            if (!cnpjValido) {
                 mensagemErro(cnpjInput, "CNPJ inválido");
-            else
+            } else {
                 mensagemValida(cnpjInput);
-      }
-      else 
-        mensagemErro(cnpjInput, "O CNPJ é obigatório");
+            }
+        } else {
+            mensagemErro(cnpjInput, "O CNPJ é obrigatório");
+        };
+
+ 
 
       // // // //
 
@@ -223,7 +218,8 @@ const formCadastro = document.getElementById("formCad");
       mensagemErro(anoInput, "Preencha a data");
 
      const dataString = `${dia}/${mes}/${ano}`;
-     const dataValida = validarData(datastring);
+
+     const dataValida = validarData(dataString);
      if(dataValida)
       mensagemValida(anoInput, "Data de nascimento inválida");
     else 
@@ -231,6 +227,6 @@ const formCadastro = document.getElementById("formCad");
       // // // //
 
      if(dataValida&&cnpjValido&&cpfValido)
-        formCad.submit();
+        formCadastro.submit();
    });
  }
