@@ -352,3 +352,59 @@ function mascaraCEP(valor) {
     .replace(/^(\d{5})(\d)/, "$1-$2")
     .slice(0, 9);
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+  // pegando os inputs quando a pagina carregar
+  const cpf = document.getElementById("cpf");
+  const cnpj = document.getElementById("cnpj");
+  const ddd = document.getElementById("telefone-ddd");
+  const telefone = document.getElementById("telefone-numero");
+  const cep = document.getElementById("cep");
+  const uf = document.getElementById("uf");
+  const ano = document.getElementById("ano_nasc");
+
+  if (cpf) {
+    cpf.addEventListener("input", () => {
+      cpf.value = mascaraCPF(cpf.value);
+    });
+  }
+
+  if (cnpj) {
+    cnpj.addEventListener("input", function () {
+      cnpj.value = mascaraCNPJ(cnpj.value);
+    });
+  }
+
+  if (ddd) {
+    ddd.addEventListener("input", function () {
+      ddd.value = ddd.value.replace(/\D/g, "").slice(0, 2);
+    });
+  }
+
+  if (telefone) {
+    telefone.addEventListener("input", function () {
+      telefone.value = mascaraTelefone(telefone.value);
+    });
+  }
+
+  if (cep) {
+    cep.addEventListener("input", function () {
+      cep.value = mascaraCEP(cep.value);
+    });
+  }
+
+  if (uf) {
+    uf.addEventListener("input", function () {
+      uf.value = uf.value
+        .replace(/[^a-zA-Z]/g, "")
+        .toUpperCase()
+        .slice(0, 2);
+    });
+  }
+
+  if (ano) {
+    ano.addEventListener("input", function () {
+      ano.value = ano.value.replace(/\D/g, "").slice(0, 4);
+    });
+  }
+});
