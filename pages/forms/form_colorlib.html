@@ -96,7 +96,7 @@
           </div>
 
           <div class="card-body">
-            <form method="POST" id="formCad">
+            <form method="POST" id="formCad" novalidate>
               <div class="form-row">
                 <div class="name">Nome</div>
                 <div class="value">
@@ -123,6 +123,9 @@
                       name="email"
                       placeholder="exemplo@email.com"
                     />
+                    <div class="invalid-feedback">
+                      Por favor, insira um E-mail válido.
+                    </div>
                   </div>
                 </div>
               </div>

@@ -147,7 +147,8 @@ async function validarCEP(cep) {
 function validarData(data) {
   regex = /^(\d{2})\/(\d{2})\/(\d{4})$/;
 
-  const format = data.match(regex);
+  const format = data.match(regex); // isso aqui além de servir para verificar, tbm serve para extrair os numeros
+  // se eu usasse o test como os outros, não daria certo pois ele só retorna um valor booleano
 
   if (!format) {
     return false;
@@ -180,6 +181,11 @@ function validarData(data) {
   return true;
 }
 
+function validarEmail(email) {
+  const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return regex.test(email); // retorna bool
+}
+
 // integrando ao html
 const formCadastro = document.getElementById("formCad");
 
@@ -197,6 +203,8 @@ if (formCadastro) {
   const diaInput = document.getElementById("dia_nasc");
   const mesInput = document.getElementById("mes_nasc");
   const anoInput = document.getElementById("ano_nasc");
+
+  const emailInput = document.getElementById("email");
 
   function mensagemErro(input) {
     input.classList.remove("is-valid");
@@ -241,6 +249,7 @@ if (formCadastro) {
     let cnpjValido = false;
     let cepValido = false;
     let dataNascimentoValida = false;
+    let emailValido = false;
 
     // validação do CPF
     if (cpfInput.value.trim() !== "") {
@@ -311,8 +320,26 @@ if (formCadastro) {
       mensagemErro(anoInput);
     }
 
+    // validando email
+
+    if (emailInput.value !== "") {
+      emailValido = validarEmail(emailInput.value);
+
+      if (!emailValido) {
+        mensagemErro(emailInput);
+      } else {
+        mensagemValida(emailInput);
+      }
+    }
+
     // se tudo estiver certo, envia o formulário
-    if (dataNascimentoValida && cepValido && cnpjValido && cpfValido) {
+    if (
+      dataNascimentoValida &&
+      cepValido &&
+      cnpjValido &&
+      cpfValido &&
+      emailValido
+    ) {
       formCadastro.submit();
     }
   });
@@ -404,7 +431,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (ano) {
     ano.addEventListener("input", function () {
-      ano.value = ano.value.replace(/\D/g, "").slice(0, 4);
+      ano.value = ano.value.replace(/\D/g, "").slice(0, 4); // impedindo de digitar caractere
     });
   }
 });
