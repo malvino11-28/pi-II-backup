@@ -147,7 +147,8 @@ async function validarCEP(cep) {
 function validarData(data) {
   regex = /^(\d{2})\/(\d{2})\/(\d{4})$/;
 
-  const format = data.match(regex);
+  const format = data.match(regex); // isso aqui além de servir para verificar, tbm serve para extrair os numeros
+  // se eu usasse o test como os outros, não daria certo pois ele só retorna um valor booleano
 
   if (!format) {
     return false;
@@ -180,6 +181,11 @@ function validarData(data) {
   return true;
 }
 
+function validarEmail(email) {
+  const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return regex.test(email); // retorna bool
+}
+
 // integrando ao html
 const formCadastro = document.getElementById("formCad");
 
@@ -197,6 +203,8 @@ if (formCadastro) {
   const diaInput = document.getElementById("dia_nasc");
   const mesInput = document.getElementById("mes_nasc");
   const anoInput = document.getElementById("ano_nasc");
+
+  const emailInput = document.getElementById("email");
 
   function mensagemErro(input) {
     input.classList.remove("is-valid");
@@ -241,6 +249,7 @@ if (formCadastro) {
     let cnpjValido = false;
     let cepValido = false;
     let dataNascimentoValida = false;
+    let emailValido = false;
 
     // validação do CPF
     if (cpfInput.value.trim() !== "") {
@@ -311,9 +320,118 @@ if (formCadastro) {
       mensagemErro(anoInput);
     }
 
+    // validando email
+
+    if (emailInput.value !== "") {
+      emailValido = validarEmail(emailInput.value);
+
+      if (!emailValido) {
+        mensagemErro(emailInput);
+      } else {
+        mensagemValida(emailInput);
+      }
+    }
+
     // se tudo estiver certo, envia o formulário
-    if (dataNascimentoValida && cepValido && cnpjValido && cpfValido) {
+    if (
+      dataNascimentoValida &&
+      cepValido &&
+      cnpjValido &&
+      cpfValido &&
+      emailValido
+    ) {
       formCadastro.submit();
     }
   });
 }
+
+// mascaras
+
+function mascaraCPF(valor) {
+  return valor
+    .replace(/\D/g, "")
+    .replace(/(\d{3})(\d)/, "$1.$2")
+    .replace(/(\d{3})(\d)/, "$1.$2")
+    .replace(/(\d{3})(\d{1,2})$/, "$1-$2")
+    .slice(0, 14); // slice serve pra garantir que o js vai pegar essa qtd de caracter do valor
+}
+
+function mascaraCNPJ(valor) {
+  return valor
+    .replace(/\D/g, "")
+    .replace(/^(\d{2})(\d)/, "$1.$2")
+    .replace(/^(\d{2})\.(\d{3})(\d)/, "$1.$2.$3")
+    .replace(/\.(\d{3})(\d)/, ".$1/$2")
+    .replace(/(\d{4})(\d)/, "$1-$2")
+    .slice(0, 18);
+}
+
+function mascaraTelefone(valor) {
+  return valor
+    .replace(/\D/g, "")
+    .replace(/(\d{5})(\d{1,4})$/, "$1-$2")
+    .slice(0, 10);
+}
+
+function mascaraCEP(valor) {
+  return valor
+    .replace(/\D/g, "")
+    .replace(/^(\d{5})(\d)/, "$1-$2")
+    .slice(0, 9);
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  // pegando os inputs quando a pagina carregar
+  const cpf = document.getElementById("cpf");
+  const cnpj = document.getElementById("cnpj");
+  const ddd = document.getElementById("telefone-ddd");
+  const telefone = document.getElementById("telefone-numero");
+  const cep = document.getElementById("cep");
+  const uf = document.getElementById("uf");
+  const ano = document.getElementById("ano_nasc");
+
+  if (cpf) {
+    cpf.addEventListener("input", () => {
+      cpf.value = mascaraCPF(cpf.value);
+    });
+  }
+
+  if (cnpj) {
+    cnpj.addEventListener("input", function () {
+      cnpj.value = mascaraCNPJ(cnpj.value);
+    });
+  }
+
+  if (ddd) {
+    ddd.addEventListener("input", function () {
+      ddd.value = ddd.value.replace(/\D/g, "").slice(0, 2);
+    });
+  }
+
+  if (telefone) {
+    telefone.addEventListener("input", function () {
+      telefone.value = mascaraTelefone(telefone.value);
+    });
+  }
+
+  if (cep) {
+    cep.addEventListener("input", function () {
+      cep.value = mascaraCEP(cep.value);
+    });
+  }
+
+  if (uf) {
+    uf.addEventListener("input", function () {
+      uf.value = uf.value
+        .replace(/[^a-zA-Z]/g, "")
+        .toUpperCase()
+        .slice(0, 2);
+    });
+  }
+
+  if (ano) {
+    ano.addEventListener("input", function () {
+      ano.value = ano.value.replace(/\D/g, "").slice(0, 4); // impedindo de digitar caractere
+    });
+  }
+});
